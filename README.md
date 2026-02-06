@@ -41,12 +41,12 @@ The web application communicates with a Flask REST API backend and uses MySQL as
 
 ## Screenshots
 ### Buyer View
-![Buyer Home Page](screenshots/screen1.png)
-![Buyer Home Page](screenshots/screen2.png)
-![Buyer Home Page](screenshots/screen3.png)
+![Buyer Home Page](screenshots/screen 1.png)
+![Buyer Home Page](screenshots/screen 2.png)
+![Buyer Home Page](screenshots/screen 3.png)
 
 ### Seller View
-![Seller Dashboard](screenshots/screen4.png)
+![Seller Dashboard](screenshots/screen 4.png)
 
 
 ## Related Repositories
