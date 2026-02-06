@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Setting</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+
+    <link rel="stylesheet" href="/static/style.css" />
+    <style>
+      .height {
+        height: 100vh;
+      }
+      .shadow {
+        box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+      }
+      .form-container {
+        display: none; /* Hide all forms by default */
+      }
+      #to-pay-form {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      #to-ship-form {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      #to-receive-form {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      #to-rate-form {
+        max-width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+      }
+      .table-container {
+        overflow-x: auto;
+        max-height: 400px; /* Set a height limit for the scrollable area */
+        margin-top: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .table thead {
+        background-color: #007bff;
+        color: white;
+      }
+
+      .table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+      }
+
+      .table tbody tr:hover {
+        background-color: #f1f1f1;
+        cursor: pointer;
+      }
+
+      .table-container::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .table-container::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 4px;
+      }
+
+      .table-container::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+      }
+
+      aside {
+          background: var(--clr-white);
+          display: flex;
+          flex-direction: column;
+          height: 100vh;
+          position: sticky;
+          top: 0;
+          overflow: hidden;
+      }
+
+      aside .top{
+          padding: 1.5rem;
+      }
+
+      aside h3 {
+          font-weight: 500;
+      }
+
+      aside .sidebar a, aside .sidebar button {
+          display: flex;
+          color: var(--clr-info-dark);
+          margin-left: 2rem;
+          gap: 1rem;
+          align-items: center;
+          height: 3.3rem;
+          transition: all .1s ease;
+
+      }
+
+      aside .sidebar button{background-color: var(--clr-white);}
+
+      aside .sidebar a span, aside .sidebar button span {
+          font-size: 1.6rem;
+          transition: all .3s ease-in-out;
+
+      }
+
+      aside .sidebar button:last-child {
+          position: absolute;
+          bottom: 1rem;
+      }
+
+      aside .sidebar a.active, aside .sidebar button:active {
+          background-color: var(--clr-light);
+          color: #e48c09;
+          margin-left: 0;
+          border-left: 5px solid #e48c09;
+          margin-left: calc(1rem - 3px);
+      }
+
+      aside .sidebar a:hover span,  aside .sidebar button:hover span {
+          margin-left: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page" class="site page-home">
+      <aside class="site-off desktop-hide">
+        <div class="off-canvas">
+          <div class="canvas-head flexitem"></div>
+        </div>
+      </aside>
+      <header>
+        <!-- header-top -->
+        <div class="header-nav">
+          <div class="container">
+            <div
+              class="wrapper flexitem"
+              style="padding: 20px; padding-left: 60px"
+            >
+              <div class="left flexitem">
+                <a href="{{ url_for('index') }}" class="logo">
+                  <img
+                    src="./static/assets/ath.png"
+                    width="150"
+                    height="90"
+                    alt="Athletyc Logo"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+    </div>
+
+    <div class="d-flex p-3">
+        <div class="sidebar w-25 d-flex flex-column height">
+          <span class="p-1"></span>
+          <span class="d-flex flex-column p-5 height">
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('account-form')"
+            >
+              My Account
+            </button>
+            <hr />
+            <p class="text-left">ORDER TRACKING</p>
+
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('to-pay-form')"
+            >
+              Orders Placed
+            </button>
+            
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('to-ship-form')"
+            >
+              To Ship
+            </button>
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('to-receive-form')"
+            >
+              To Receive
+            </button>
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('to-rate-form')"
+            >
+              To Rate
+            </button>
+            <button
+              class="btn btn-light m-1 border"
+              onclick="showForm('completed-orders-form')"
+            >
+              Completed
+            </button>
+            <hr />
+            <button
+              class="btn btn-light m-1 border"
+              type="button"
+              onclick="confirmLogout()"
+            >
+              <i
+                class="fa-sharp fa-regular fa-arrow-right-from-bracket"
+                style="color: #000000"
+              ></i>
+              Logout
+            </button>
+          </span>
+        </div>
+
+      <div class="w-100">
+        {% with messages = get_flashed_messages() %} {% if messages %}
+        <div class="alert alert-info m-5 text-center">{{ messages[0] }}</div>
+        {% endif %} {% endwith %}
+
+        <!-- Account Form -->
+        <div id="account-form" class="form-container container p-5">
+          <h3>{{ user_data.name }}</h3>
+          <h6>Mobile Number: {{ user_data.mobile_no }}</h6>
+          <h6>Email: {{ user_data.email }}</h6>
+          <h6>
+            Address: {{ user_data.region, user_data.province, user_data.city,
+            user_data.brgy or 'No address provided' }}
+          </h6>
+          <p></p>
+
+          <!-- <h6>Edit Address</h6>
+
+          <form method="POST" action="{{ url_for('profile_setting') }}">
+            <!--
+                    <div class="form-group">
+                        <label for="address">Full Address</label>
+                        <input type="text" class="form-control" id="address" name="address" value="{{ user_data.address }}" required>
+                    </div>-->
+
+            <!--ADDRESS-->
+            <!-- Region --
+            <div class="col-sm-6 mb-3">
+              <label for="region" class="form-label">Region *</label>
+              <select
+                name="region"
+                class="form-control form-control-md"
+                id="region"
+                required
+              >
+                <option selected disabled>Choose Region</option>
+              </select>
+              <input type="hidden" id="region-text" name="region_text" />
+            </div>
+
+            <!-- Province --
+            <div class="col-sm-6 mb-3">
+              <label for="province" class="form-label">Province *</label>
+              <select
+                name="province"
+                class="form-control form-control-md"
+                id="province"
+                required
+              >
+                <option selected disabled>Choose Province</option>
+              </select>
+              <input type="hidden" id="province-text" name="province_text" />
+            </div>
+
+            <!-- City/Municipality --
+            <div class="col-sm-6 mb-3">
+              <label for="city" class="form-label">City/Municipality *</label>
+              <select
+                name="city"
+                class="form-control form-control-md"
+                id="city"
+                required
+              >
+                <option selected disabled>Choose City/Municipality</option>
+              </select>
+              <input type="hidden" id="city-text" name="city_text" />
+            </div>
+
+            <!-- Barangay --
+            <div class="col-sm-6 mb-3">
+              <label for="barangay" class="form-label">Barangay *</label>
+              <select
+                name="barangay"
+                class="form-control form-control-md"
+                id="barangay"
+                required
+              >
+                <option selected disabled>Choose Barangay</option>
+              </select>
+              <input type="hidden" id="barangay-text" name="barangay_text" />
+            </div>
+            END ADDDRESS --
+
+            <button class="btn btn-dark text-light w-100" type="submit">
+              SAVE ADDRESS
+            </button>
+          </form> -->
+        </div>
+
+      <!-- Orders Placed -->
+      <div id="to-pay-form" class="form-container container p-5">
+        <h3>Order Placed</h3>
+        {% if to_pay_orders %}
+          {% for order in to_pay_orders %}
+          <div class="card mb-4 p-3 shadow-sm">
+            <!-- Order ID & Status -->
+            <div class="mb-2 d-flex justify-content-between">
+              <h6 class="mb-0">Order ID: {{ order.orderID }}</h6>
+            </div>
+            <p class="text-muted">Date of order: {{ order.date }}</p>
+
+            
+
+            <div class="row align-items-center">
+              <!-- Left Column (Image) -->
+              <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{{ order.image_paths }}" alt="Product Image" class="img-fluid rounded" style="width: 10rem; height: 10rem; object-fit: cover;">
+              </div>
+
+              <!-- Right Column (Details) -->
+              <div class="col-md-6">
+                <h5>{{ order.prName }}</h5>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: ₱{{ order.prPrice }}</p>
+                <p class="text-primary font-weight-bold">₱{{ order.price }}</p>
+              </div>
+
+              <!-- Status History -->
+              <div class="col-md-3">
+                <h6>Order Status</h6>
+                <ul class="list-unstyled">
+                  {% for item in order.status_history %}
+                    <li>
+                      <strong>{{ item.status|capitalize }}</strong><br>
+                      <small class="text-muted">{{ item.updated_at }}</small>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No orders placed at the moment.</p>
+        {% endif %}
+      </div>
+      <!-- end -->
+
+       
+        <!-- To Ship Orders -->
+      <div id="to-ship-form" class="form-container container p-5">
+        <h3>Order to Ship</h3>
+        {% if to_ship_orders %}
+          {% for order in to_ship_orders %}
+          <div class="card mb-4 p-3 shadow-sm">
+            <!-- Order ID & Status -->
+            <div class="mb-2 d-flex justify-content-between">
+              <h6 class="mb-0">Order ID: {{ order.orderID }}</h6>
+            </div>
+            <p class="text-muted">Date of order: {{ order.date }}</p>
+
+            
+
+            <div class="row align-items-center">
+              <!-- Left Column (Image) -->
+              <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{{ order.image_paths }}" alt="Product Image" class="img-fluid rounded" style="width: 10rem; height: 10rem; object-fit: cover;">
+              </div>
+
+              <!-- Right Column (Details) -->
+              <div class="col-md-6">
+                <h5>{{ order.prName }}</h5>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: ₱{{ order.prPrice }}</p>
+                <p class="text-primary font-weight-bold">₱{{ order.price }}</p>
+              </div>
+
+              <!-- Status History -->
+              <div class="col-md-3">
+                <h6>Order Status</h6>
+                <ul class="list-unstyled">
+                  {% for item in order.status_history %}
+                    <li>
+                      <strong>{{ item.status|capitalize }}</strong><br>
+                      <small class="text-muted">{{ item.updated_at }}</small>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No orders to ship at the moment.</p>
+        {% endif %}
+      </div> 
+      <!-- end -->
+
+
+        <!-- To Receive Orders -->
+        <div id="to-receive-form" class="form-container container p-5">
+        <h3>Orders to Receive</h3>
+        {% if to_receive_orders %}
+          {% for order in to_receive_orders %}
+          <div class="card mb-4 p-3 shadow-sm">
+            <!-- Order ID & Status -->
+            <div class="mb-2 d-flex justify-content-between">
+              <h6 class="mb-0">Order ID: {{ order.orderID }}</h6>
+            </div>
+            <p class="text-muted">Date of order: {{ order.date }}</p>
+
+           
+
+
+            <div class="row align-items-center">
+              <!-- Left Column (Image) -->
+              <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{{ order.image_paths }}" alt="Product Image" class="img-fluid rounded" style="width: 10rem; height: 10rem; object-fit: cover;">
+              </div>
+
+              <!-- Right Column (Details) -->
+              <div class="col-md-6">
+                <h5>{{ order.prName }}</h5>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: ₱{{ order.prPrice }}</p>
+                <p class="text-primary font-weight-bold">₱{{ order.price }}</p>
+
+                <!-- confirm receive button -->
+                <form action="/update_status" method="POST">
+                  <input type="hidden" name="id" value="{{ order.orderID }}" />
+                  <!-- Include order_id here -->
+                  <button 
+                  type="submit" 
+                  class="btn btn-dark mt-2 border"
+                  id="confirm-btn-{{ order.orderID }}" 
+                  {% if order.status != 'order delivered' %}disabled{% endif %}
+                  >
+                    Confirm order receive
+                  </button>
+                </form>
+              </div>
+
+               <!-- Status History -->
+              <div class="col-md-3">
+                <h6>Order Status</h6>
+                <ul class="list-unstyled">
+                  {% for item in order.status_history %}
+                    <li>
+                      <strong>{{ item.status|capitalize }}</strong><br>
+                      <small class="text-muted">{{ item.updated_at }}</small>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No orders to receive at the moment.</p>
+        {% endif %}
+      </div> 
+      <!-- end -->
+
+        <!-- To Rate Orders -->
+        <div id="to-rate-form" class="form-container container p-5">
+        <h3>Orders to Rate</h3>
+        {% if to_rate_orders %}
+          {% for order in to_rate_orders %}
+          <div class="card mb-4 p-3 shadow-sm">
+            <!-- Order ID & Status -->
+            <div class="mb-2 d-flex justify-content-between">
+              <h6 class="mb-0">Order ID: {{ order.orderID }}</h6>
+            </div>
+            <p class="text-muted">Date of order: {{ order.date }}</p>
+
+            <!-- Status History -->
+            <div class="mt-3 pb-3">
+              <h6>Order Status</h6>
+              <ul class="list-unstyled">
+                {% for item in order.status_history %}
+                  <li>
+                    <strong>{{ item.status|capitalize }}</strong><br>
+                    <small class="text-muted">{{ item.updated_at }}</small>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+
+            <div class="row align-items-center">
+              <!-- Left Column (Image) -->
+              <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{{ order.image_paths }}" alt="Product Image" class="img-fluid rounded" style="width: 10rem; height: 10rem; object-fit: cover;">
+              </div>
+
+              <!-- Right Column (Details) -->
+              <div class="col-md-9">
+                <h5>{{ order.prName }}</h5>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: ₱{{ order.prPrice }}</p>
+                <p class="text-primary font-weight-bold">₱{{ order.price }}</p>
+              </div>
+            </div>
+
+            <form action="/submit_feedback" method="POST" class="mt-2">
+              <input
+                type="hidden"
+                name="order_id"
+                value="{{ order.orderID }}"
+              />
+              <input
+                type="hidden"
+                name="product_id"
+                value="{{ order.product_id }}"
+              />
+              <input
+                type="hidden"
+                name="sellerID"
+                value="{{ order.sellerID }}"
+              />
+
+              <div class="form-group">
+                <label for="feedback_{{ order.order_id }}"
+                  >Your Feedback:</label
+                >
+                <textarea
+                  class="form-control"
+                  id="feedback_{{ order.feedback }}"
+                  name="feedback"
+                  rows="2"
+                  required
+                ></textarea>
+              </div>
+
+              <div class="form-group">
+                <label for="report_reason_{{ order.id }}"
+                  >Reason for Reporting:</label
+                >
+                <textarea
+                  class="form-control"
+                  id="report_reason_{{ order.id }}"
+                  name="report_reason"
+                  rows="2"
+                ></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                Submit Feedback
+              </button>
+            </form>
+
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No orders to rate at the moment.</p>
+        {% endif %}
+      </div> 
+      <!-- end -->
+
+                  
+        <!-- Completed Orders -->
+       <div id="completed-orders-form" class="form-container container p-5">
+        <h3>Completed Orders</h3>
+        {% if completed_orders %}
+          {% for order in completed_orders %}
+          <div class="card mb-4 p-3 shadow-sm">
+            <!-- Order ID & Status -->
+            <div class="mb-2 d-flex justify-content-between">
+              <h6 class="mb-0">Order ID: {{ order.orderID }}</h6>
+            </div>
+            <p class="text-muted">Date of order: {{ order.date }}</p>
+
+            <!-- Status History -->
+            <div class="mt-3 pb-3">
+              <h6>Status History</h6>
+              <ul class="list-unstyled">
+                {% for item in order.status_history %}
+                  <li>
+                    <strong>{{ item.status|capitalize }}</strong><br>
+                    <small class="text-muted">{{ item.updated_at }}</small>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+
+            <div class="row align-items-center">
+              <!-- Left Column (Image) -->
+              <div class="col-md-3 text-center mb-3 mb-md-0">
+                <img src="{{ order.image_paths }}" alt="Product Image" class="img-fluid rounded" style="width: 10rem; height: 10rem; object-fit: cover;">
+              </div>
+
+              <!-- Right Column (Details) -->
+              <div class="col-md-9">
+                <h5>{{ order.prName }}</h5>
+                <p>Quantity: {{ order.quantity }}</p>
+                <p>Price: ₱{{ order.prPrice }}</p>
+                <p class="text-primary font-weight-bold">₱{{ order.price }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <p>No orders completed at the moment.</p>
+        {% endif %}
+      </div> 
+      <!-- end -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      function showForm(formId) {
+        document.querySelectorAll(".form-container").forEach((form) => {
+          form.style.display = "none";
+        });
+        document.getElementById(formId).style.display = "block";
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        showForm("account-form");
+      });
+
+      //logout
+      function confirmLogout() {
+        // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+          // Redirect to the logout route if the user confirms
+          window.location.href = "{{ url_for('logout') }}";
+        }
+      }
+    </script>
+    <script src="/static/reg.js"></script>
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reports</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../../static/seller.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Seller Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('sellerdashboard') }}">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('addprd') }}">
+                    <span class="material-symbols-sharp">add</span>
+                    <h3>Add Product</h3>
+                </a>
+                <a href="{{ url_for('seller_feedback') }}">
+                    <span class="material-symbols-sharp">mail_outline</span>
+                    <h3>Feedback</h3>
+                </a>
+                <a href="{{ url_for('seller_products') }}">
+                    <span class="material-symbols-sharp">receipt_long</span>
+                    <h3>Products</h3>
+                </a>
+                <a href="{{ url_for('sellerdashboard') }}" class="active">
+                    <span class="material-symbols-sharp">report_gmailerrorred</span>
+                    <h3>Reports</h3>
+                </a>
+                <a href="{{ url_for('sellerdashboard') }}">
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+                <a href="#">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </a>
+            </div>
+        </aside>
+
+        <main>
+            <h1>Customer Reports</h1>
+
+            <div class="reports-grid">
+                <h2>All Customer Reports</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Customer ID</th>
+                            <th>Report Reason</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2001</td>
+                            <td>Product Issue</td>
+                            <td>Received damaged product.</td>
+                            <td>2023-11-08</td>
+                        </tr>
+                        <tr>
+                            <td>2002</td>
+                            <td>Delivery Delay</td>
+                            <td>Package arrived 3 days late.</td>
+                            <td>2023-11-07</td>
+                        </tr>
+                        <tr>
+                            <td>2003</td>
+                            <td>Customer Service</td>
+                            <td>Unhelpful response from support team.</td>
+                            <td>2023-11-06</td>
+                        </tr>
+                        <tr>
+                            <td>2004</td>
+                            <td>Payment Issue</td>
+                            <td>Charged twice for a single order.</td>
+                            <td>2023-11-05</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <div class="right">
+            <div class="top">
+                <button id="menu_bar">
+                    <span class="material-symbols-sharp">menu</span>
+                </button>
+                <div class="theme-toggler">
+                    <span class="material-symbols-sharp active">light_mode</span>
+                    <span class="material-symbols-sharp">dark_mode</span>
+                </div>
+                <div class="profile">
+                    <div class="info">
+                        <p><b>Diwata</b></p>
+                        <p>Seller</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    <div class="profile-photo">
+                        <img src="../../static/assets/diwata.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../static/seller.js"></script>
+</body>
+
+</html>

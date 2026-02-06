@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Dashboard</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../../static/seller.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Seller Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('sellerdashboard') }}" class="active">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('seller_salesrecord') }}">
+                    <span class="material-symbols-sharp">menu_book</span>
+                    <h3>Sales Record</h3>
+                </a>
+                <a href="{{ url_for('addprd') }}">
+                    <span class="material-symbols-sharp">add</span>
+                    <h3>Add Product</h3>
+                </a>
+                <a href="{{ url_for('seller_feedback') }}" >
+                    <span class="material-symbols-sharp">mail_outline</span>
+                    <h3>Feedback</h3>
+                </a>
+                <a href="{{ url_for('seller_products') }}">
+                    <span class="material-symbols-sharp">inventory_2</span>
+                    <h3>Products</h3>
+                </a>
+                
+                <a href="{{ url_for('seller_order') }}" >
+                    <span class="material-symbols-sharp">receipt_long</span>
+                    <h3>Orders</h3>
+                </a>
+               
+                <a href="{{ url_for('seller_messages') }}">
+                    <span class="material-symbols-sharp">chat</span>
+                    <h3>Messages</h3>
+                </a>
+
+                <a href="{{ url_for('seller_vouchers') }}">
+                    <span class="material-symbols-sharp">sell</span>
+                    <h3>Vouchers</h3>
+                </a>
+                <a href="{{ url_for('seller_settings') }}" >
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+
+                <button class="btn btn-light" type="button" onclick="confirmLogout()">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </button>
+            </div>
+        </aside>
+        <!-- --------------
+        end aside
+      -------------------- -->
+
+        <!-- --------------
+        start main part
+      --------------- -->
+
+        <main>
+            <h1>Dashboard</h1>
+
+            <div class="insights">
+                <!-- Total Sales -->
+                <div class="sales">
+                    <span class="material-symbols-sharp">trending_up</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Sales</h3>
+                            <h1>₱{{ total_sales }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Product -->
+                <div class="expenses">
+                    <span class="material-symbols-sharp">local_mall</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Product Sold</h3>
+                            <h1>{{ total_product }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <!-- Total Order -->
+                <div class="income">
+                    <span class="material-symbols-sharp">stacked_line_chart</span>
+                    <div class="middle">
+                        <div class="left">
+                            <h3>Total Order</h3>
+                            <h1>{{ total_order }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- end insights -->
+            <div class="recent_order">
+                <h2>Recent Orders</h2>
+            
+                <!-- Status Filter Form -->
+                <form method="GET" action="{{ url_for('sellerdashboard') }}" class="status-filter-form">
+                    <label for="status">Filter by Status:</label>
+                    <select name="status" id="status" onchange="this.form.submit()">
+                        <option value="">All Status</option>
+                        <option value="order placed" {% if status_filter == 'order placed' %}selected{% endif %}>Order Placed</option>
+                        <option value="order approved" {% if status_filter == 'order approved' %}selected{% endif %}>Order Approved</option>
+                        <option value="order on the way" {% if status_filter == 'order on the way' %}selected{% endif %}>Order On The Way</option>
+                        <option value="order received" {% if status_filter == 'order received' %}selected{% endif %}>Order Received</option>
+                        <option value="feedback done" {% if status_filter == 'feedback done' %}selected{% endif %}>Feedback Done</option>
+                    </select>
+                    <input type="hidden" name="show_all" value="{{ 'true' if show_all else 'false' }}">
+                </form>
+            
+                <!-- Orders Table -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="text-align: start">User ID</th>
+                            <th style="text-align: start">Quantity</th>
+                            <th style="text-align: start">Price</th>
+                            <th style="text-align: start">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if orders %}
+                            {% for order in orders %}
+                                <tr style="text-align: start">
+                                    <td>{{ order.user_id }}</td>
+                                    <td>{{ order.quantity }}</td>
+                                    <td>₱{{ "{:,.2f}".format(order.price) }}</td>
+                                    <td>{{ order.status }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="4">No orders found</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            
+                <!-- Show All / Show Recent Link -->
+                <a href="{{ url_for('sellerdashboard', show_all='true' if not show_all else 'false', status=status_filter) }}">
+                    {{ 'Show All' if not show_all else 'Show Recent' }}
+                </a>
+            </div>
+            
+
+        </main>
+        <!------------------
+         end main
+        ------------------->
+
+        <!----------------
+        start right main 
+      ----------------------
+        <div class="right">
+
+            <div class="top">
+                <button id="menu_bar">
+                    <span class="material-symbols-sharp">menu</span>
+                </button>
+
+               
+                <div class="profile">
+                    <div class="info">
+                        <p><b></b></p>
+                        <p>Seller</p>
+                        <small class="text-muted"></small>
+                    </div>
+                    
+                    <div class="profile-photo">
+                        <img src="../../static/assets/diwata.png" alt="" />
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+
+    <script src="../../static/seller.js"></script>
+    <script>
+        //logout
+        function confirmLogout() {
+            // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+                // Redirect to the logout route if the user confirms
+            window.location.href = "{{ url_for('logout') }}";
+            }
+        }
+
+    </script>
+</body>
+
+</html>

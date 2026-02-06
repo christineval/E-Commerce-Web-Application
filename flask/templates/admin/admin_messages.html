@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Messages</title>
+    <link rel="stylesheet" href="/static/admin.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    
+    <!-- Bootstrap CSS 
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+-->
+</head>
+<body>
+    <div class="container mt-5">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Admin Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('admin_dashboard') }}" class="active">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('user_management') }}">
+                    <span class="material-symbols-sharp">person</span>
+                    <h3>User Management</h3>
+                </a>
+                <a href="{{ url_for('adminreports') }}">
+                    <span class="material-symbols-sharp">report_gmailerrorred</span>
+                    <h3>Reports</h3>
+                </a>
+                <a href="{{ url_for('user_logs') }}">
+                    <span class="material-symbols-sharp">lab_profile</span>
+                    <h3>Activity Logs</h3>
+                </a>
+                <a href="">
+                    <span class="material-symbols-sharp">chat</span>
+                    <h3>Messages</h3>
+                </a>
+                <!--<a href="#">
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>-->
+                <button class="btn btn-light m-1 border" type="button" onclick="confirmLogout()">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </button>
+            </div>
+        </aside>
+        <!-- --------------
+        end aside
+      -------------------- -->
+    <!-- --------------
+        start main part
+      --------------- -->
+
+      <main>
+
+        <h1>Messages</h1>
+
+        <!-- Message List Section --
+        <div class="message-grid">
+            <h2>Message List</h2>
+            {% if messages %}
+                <table class="table table-bordered table-striped">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Buyer ID</th>
+                            <th>Sender</th>
+                            <th>Message</th>
+                            <th>Sent At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in messages %}
+                            <tr>
+                                <td>{{ message.buyer_id }}</td>
+                                <td>{{ message.role }}</td>
+                                <td>{{ message.message }}</td>
+                                <td>{{ message.created_at }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="alert alert-info text-center">No messages found.</p>
+            {% endif %}
+        </div>->
+
+        <!-- Send Message Form Section -->
+        <div class="message-form">
+            <h2>Send a Message</h2>
+            <form action="/sellerdashboard/send_message" method="POST">
+                <div class="text-field">
+                    <label for="buyer_id">Buyer ID</label><br><br>
+                    <input type="text" id="buyer_id" name="buyer_id" required>
+                </div>
+
+                <div class="text-field">
+                    <label for="message">Message</label><br><Br>
+                    <textarea id="message" name="message" class="form-control" rows="4" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+      </main>
+    </div>
+    
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        //logout
+        function confirmLogout() {
+            // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+                // Redirect to the logout route if the user confirms
+            window.location.href = "{{ url_for('logout') }}";
+            }
+        }
+
+    </script>
+</body>
+</html>

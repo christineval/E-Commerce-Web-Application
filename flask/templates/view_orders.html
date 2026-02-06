@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5 bg-dark p-5 text-light">
+        <h1>Your Orders</h1>
+        <hr>
+
+        {% if user_orders %}
+            <div class="orders-container">
+                {% for order in user_orders %}
+                    <div class="order-item border p-3 mb-3 d-flex flex-column" style="line-height: 6px">
+                        <h1>Order ID: {{ order.id }}</h1>
+                        <label>Product Name: {{ order.prName }}</label>
+                        <label>Quantity: {{ order.quantity }}</label>
+                        <label class="mt-2">Price: ₱{{ "%.2f"|format(order.price) }}</label>
+                        
+                        {% if order.status == 'order placed' %}
+                            <form action="/submit_feedback" method="POST" class="mt-2" >
+                                <input type="hidden" name="order_id" value="{{ order.id }}">
+                                <input type="hidden" name="product_id" value="{{ order.product_id }}">
+                                <input type="hidden" name="sellerID" value="{{ order.sellerID }}">
+                            </form>
+                        {% elif order.status == 'order received' %}
+                            <form action="/submit_feedback" method="POST" class="mt-2" >
+                                <input type="hidden" name="order_id" value="{{ order.id }}">
+                                <input type="hidden" name="product_id" value="{{ order.product_id }}">
+                                <input type="hidden" name="sellerID" value="{{ order.sellerID }}">
+                                <div class="form-group">
+                                    <label for="feedback_{{ order.id }}">Your Feedback:</label>
+                                    <textarea class="form-control" id="feedback_{{ order.id }}" name="feedback" rows="2" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>You have no orders yet.</p>
+        {% endif %}
+
+        <div class="mt-4">
+            <a href="/index" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Seller Login</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+    <link rel="stylesheet" href="/static/seller.css" />
+  </head>
+  <body>
+    <div class="containersl">
+      <input type="checkbox" id="check" />
+      <div class="login form">
+        <header>Login</header>
+        <form action="slogin_submit" method="POST">
+
+          {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                              <div class="alert alert-info" role="alert">
+                                  {% for message in messages %}
+                                      {{ message }}<br>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
+                        {% endwith %}
+
+          <input type="email" name="email" id="email" placeholder="Enter your email" required/>
+          <input type="password" name="password" id="password" placeholder="Enter your password" required/>
+          <a href="">Forgot password?</a>
+          <input type="submit" class="button" value="Login" />
+        </form>
+        <div class="signup">
+            Don't have an account?
+            <a href="{{ url_for('seller_register') }}" style="color: midnightblue;">Signup</label></a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

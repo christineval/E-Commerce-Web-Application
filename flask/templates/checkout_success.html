@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout Success</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <style>
+        .success-container {
+            margin-top: 100px;
+            text-align: center;
+        }
+        .status-message {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .status-placed { color: #ffc107; }
+        .status-approved { color: #007bff; }
+        .status-on-the-way { color: #17a2b8; }
+        .status-received { color: #28a745; }
+        .summary { font-size: 18px; margin-top: 20px; }
+        .btn-container { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container success-container bg-dark ">
+      <div class="bg-dark p-5 status-message 
+      {% if status == 'order placed' %}status-placed
+      {% elif status == 'order approved' %}status-approved
+      {% elif status == 'order on the way' %}status-on-the-way
+      {% elif status == 'order received' %}status-received
+      {% endif %}">
+      {% if status == 'order placed' %}
+          <i class="fas fa-hourglass-half" style="color: #ffc107"></i>
+          <p>Your order has been placed!</p>
+      {% elif status == 'order approved' %}
+          <i class="fas fa-check" style="color: #007bff"></i>
+          <p>Your order has been approved!</p>
+      {% elif status == 'order on the way' %}
+          <i class="fas fa-truck" style="color: #17a2b8"></i>
+          <p>Your order is on the way!</p>
+      {% elif status == 'order received' %}
+          <i class="fas fa-check-circle" style="color: #28a745"></i>
+          <p>Your order has been received!</p>
+      {% else %}
+          <i class="fas fa-info-circle"></i>
+          <p>Order status unknown.</p>
+      {% endif %}
+  </div>
+
+        <div class="summary bg-dark p-2 text-light lead">
+            {% if status == 'order placed' %}
+                Thank you for your order! We're preparing it for approval.
+            {% elif status == 'order approved' %}
+                Your order has been approved and is getting ready for shipment!
+            {% elif status == 'order on the way' %}
+                Your order is on its way to you! Check your orders page for updates.<br>
+                <form action="/update_status" method="POST">
+                  <input type="hidden" name="id" value="{{ orderID }}">  <!-- Include order_id here -->
+                  <button type="submit" class="btn btn-dark mt-2 border">Confirm order receive</button>
+              </form>
+            {% elif status == 'order received' %}
+                Thank you for shopping with us! We hope you enjoy your purchase.<br>
+                
+            {% else %}
+                Please check your order details for more information.
+            {% endif %}
+        </div>
+
+   
+
+        <div class="btn-container w-100 bg-dark p-5 d-flex">
+            <a href="/index" class="btn btn-primary btn-lg w-100 m-1">Continue Shopping</a>
+            <a href="{{ url_for('profile_setting') }}" class="btn btn-success btn-lg w-100 m-1">View Your Orders</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

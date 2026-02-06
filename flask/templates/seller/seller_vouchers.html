@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Seller Vouchers</title>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="/static/seller.css">
+    <style>
+        
+        header h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        /* Section Styling */
+        section {
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #444;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Table Styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+        
+        td {
+            font-size: 0.95rem;
+        }
+        
+        /* Buttons in Table */
+        .btn {
+            padding: 6px 15px;
+            font-size: 0.9rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .btn-toggle {
+            background-color: #ffc107;
+            color: #fff;
+        }
+        
+        .btn-toggle:hover {
+            background-color: #e0a800;
+        }
+        
+        .btn-delete {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+        
+            table, th, td {
+                font-size: 0.85rem;
+            }
+        
+            button {
+                width: 100%;
+                padding: 12px;
+                font-size: 1rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Seller Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('sellerdashboard') }}">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('seller_salesrecord') }}">
+                    <span class="material-symbols-sharp">menu_book</span>
+                    <h3>Sales Record</h3>
+                </a>
+                <a href="{{ url_for('addprd') }}">
+                    <span class="material-symbols-sharp">add</span>
+                    <h3>Add Product</h3>
+                </a>
+                <a href="{{ url_for('seller_feedback') }}" >
+                    <span class="material-symbols-sharp">mail_outline</span>
+                    <h3>Feedback</h3>
+                </a>
+                <a href="{{ url_for('seller_products') }}">
+                    <span class="material-symbols-sharp">inventory_2</span>
+                    <h3>Products</h3>
+                </a>
+               
+                <a href="{{ url_for('seller_order') }}" >
+                    <span class="material-symbols-sharp">receipt_long</span>
+                    <h3>Orders</h3>
+                </a>
+                <a href="{{ url_for('seller_messages') }}">
+                    <span class="material-symbols-sharp">chat</span>
+                    <h3>Messages</h3>
+                </a>
+
+                <a href="{{ url_for('seller_vouchers') }}"  class="active">
+                    <span class="material-symbols-sharp">sell</span>
+                    <h3>Vouchers</h3>
+                </a>
+                <a href="{{ url_for('seller_settings') }}" >
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+
+                <button class="btn btn-light" type="button" onclick="confirmLogout()">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </button>
+            </div>
+        </aside>
+        <!-- --------------
+        end aside
+      -------------------- -->
+
+
+
+        <main>
+            <h1>Manage Seller Vouchers</h1>
+       
+        
+        <!-- Add Voucher Section -->
+         <div class="vouchers-grid">
+        <section class="add-voucher">
+            <h2>Add New Voucher</h2>
+            <form action="/seller/vouchers/add" method="POST">
+                <div class="form-group">
+                    <label for="voucher-code">Voucher Code:</label>
+                    <input type="text" id="voucher-code" name="voucher_code" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="discount-amount">Discount Amount:</label>
+                    <input type="number" step="0.01" id="discount-amount" name="discount_amount" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="min-spend">Minimum Spend:</label>
+                    <input type="number" step="0.01" id="min-spend" name="min_spend" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="expiration-date">Expiration Date:</label>
+                    <input type="date" id="expiration-date" name="expiration_date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="code-limit">Code Limit:</label>
+                    <input type="number" id="code-limit" name="code_limit" value="10" min="1" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Voucher</button>
+            </form>
+        </section>
+    </div>
+
+        <!-- Manage Vouchers Section -->
+         <div class="vouchers-grid">
+        <section class="voucher-list">
+            <h2>Available Vouchers</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Voucher Code</th>
+                        <th>Discount Amount</th>
+                        <th>Minimum Spend</th>
+                        <th>Expiration Date</th>
+                        <th>Code Limit</th>
+                        <th>Is Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for voucher in vouchers %}
+                    <tr>
+                        <td>{{ voucher.code }}</td>
+                        <td>₱{{ "{:,.2f}".format(voucher.discount_amount) }}</td>
+                        <td>₱{{ "{:,.2f}".format(voucher.min_spend) }}</td>
+                        <td>{{ voucher.expiration_date }}</td>
+                        <td>{{ voucher.code_limit }}</td>
+                        <td>{{ 'Yes' if voucher.is_active == 1 else 'No' }}</td>
+                        <td>
+                            <form action="/seller/vouchers/update/{{ voucher.id }}" method="POST" style="display: inline-block;">
+                                <button type="submit" name="action" value="toggle" class="btn btn-toggle">
+                                    {{ 'Deactivate' if voucher.is_active == 1 else 'Activate' }}
+                                </button>
+                            </form>
+                            <form action="/seller/vouchers/delete/{{ voucher.id }}" method="POST" style="display: inline-block;">
+                                <button type="submit" class="btn btn-delete">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        </div>
+        </main>
+    </div>
+
+    <script>
+        //logout
+        function confirmLogout() {
+            // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+                // Redirect to the logout route if the user confirms
+            window.location.href = "{{ url_for('logout') }}";
+            }
+        }
+
+    </script>
+</body>
+</html>

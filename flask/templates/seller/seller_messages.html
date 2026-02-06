@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Messages</title>
+    <link rel="stylesheet" href="../../static/seller.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+  
+    <style>
+        h1, h2 {
+        margin-bottom: 10px;
+        }
+
+        .message-container {
+        max-width: 900px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .buyer-section {
+        margin-bottom: 30px;
+        }
+
+        .buyer-header {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 10px;
+        padding-bottom: 5px;
+        border-bottom: 1px solid #ccc;
+        }
+
+        .message {
+        margin: 8px 0;
+        padding: 10px 15px;
+        border-radius: 15px;
+        display: inline-block;
+        max-width: 75%;
+        word-wrap: break-word;
+        }
+
+        .from-seller {
+        background-color: #d1e7dd;
+        align-self: flex-end;
+        margin-left: auto;
+        }
+
+        .from-buyer {
+        background-color: #f8d7da;
+        align-self: flex-start;
+        margin-right: auto;
+        }
+
+        .message-time {
+        font-size: 12px;
+        color: #777;
+        margin-top: 2px;
+        }
+
+        .chat-box {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 15px;
+        }
+
+        .send-message-form {
+        border-top: 1px solid #ccc;
+        padding-top: 20px;
+        }
+
+        .form-group {
+        margin-bottom: 15px;
+        }
+
+        label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #aaa;
+        border-radius: 5px;
+        font-size: 14px;
+        }
+
+        button {
+        background-color: #2e86de;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        }
+
+        button:hover {
+        background-color: #1c6dc1;
+        }
+
+  </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Seller Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('sellerdashboard') }}">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('seller_salesrecord') }}" >
+                    <span class="material-symbols-sharp">menu_book</span>
+                    <h3>Sales Record</h3>
+                </a>
+                <a href="{{ url_for('addprd') }}">
+                    <span class="material-symbols-sharp">add</span>
+                    <h3>Add Product</h3>
+                </a>
+                <a href="{{ url_for('seller_feedback') }}" >
+                    <span class="material-symbols-sharp">mail_outline</span>
+                    <h3>Feedback</h3>
+                </a>
+                <a href="{{ url_for('seller_products') }}">
+                    <span class="material-symbols-sharp">inventory_2</span>
+                    <h3>Products</h3>
+                </a>
+               
+                <a href="{{ url_for('seller_order') }}" >
+                    <span class="material-symbols-sharp">receipt_long</span>
+                    <h3>Orders</h3>
+                </a>
+
+                <a href="{{ url_for('seller_messages') }}"  class="active">
+                    <span class="material-symbols-sharp">chat</span>
+                    <h3>Messages</h3>
+                </a>
+
+
+                <a href="{{ url_for('seller_vouchers') }}">
+                    <span class="material-symbols-sharp">sell</span>
+                    <h3>Vouchers</h3>
+                </a>
+                <a href="{{ url_for('seller_settings') }}" >
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+
+                <button class="btn btn-light" type="button" onclick="confirmLogout()">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </button>
+            </div>
+        </aside>
+        <!-- --------------
+        end aside
+      -------------------- -->
+    <!-- --------------
+        start main part
+      --------------- -->
+
+    <main>
+
+    <div class="message-container">
+        <h1>Seller Messages</h1>
+        <h2>Buyers</h2>
+        <ul>
+        {% for b in buyers %}
+            <li>
+            <a href="{{ url_for('seller_messages', buyer_id=b.buyer_id) }}">
+                {{ b.buyer_name }} (ID: {{ b.buyer_id }})
+            </a>
+            </li>
+        {% endfor %}
+        </ul>
+
+    <!-- Loop over each buyer group -->
+    {% if selected_buyer %}
+    {% if messages %}
+        <div class="buyer-section">
+        <div class="buyer-header">Conversation with Buyer ID: {{ selected_buyer }} ({{ messages[0].buyer_name or "Unknown Buyer" }})</div>
+        <div class="chat-box">
+            {% for m in messages %}
+            <div class="message {{ 'from-seller' if m.role == 'seller' else 'from-buyer' }}">
+                {{ m.message }}
+                <div class="message-time">{{ m.created_at }}</div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    {% else %}
+        <p>No messages found with this buyer.</p>
+    {% endif %}
+    {% else %}
+    <p>Please select a buyer to view messages.</p>
+    {% endif %}
+
+
+    <!-- Send Message -->
+    <div class="send-message-form">
+      <h2>Send a Message</h2>
+      <form action="/sellerdashboard/send_message" method="POST">
+        <div class="form-group">
+          <label for="buyer_id">Buyer ID</label>
+          <input type="text" id="buyer_id" name="buyer_id" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4" required></textarea>
+        </div>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+
+    
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        //logout
+        function confirmLogout() {
+            // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+                // Redirect to the logout route if the user confirms
+            window.location.href = "{{ url_for('logout') }}";
+            }
+        }
+
+    </script>
+</body>
+</html>

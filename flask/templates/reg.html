@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form - Athletyc</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: "Inter", sans-serif;
+            height: 100vh;
+            width: 100%;
+            background-color: #ffffff; /* Background color */
+        }
+
+
+        a{text-decoration: none;}
+
+        .full-screen-container {
+           
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 0;
+        }
+        .right-container {
+            background-color: white;
+            padding: 3rem;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        h3 {
+            color: #1a1a1a;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+          }
+
+        h6 {
+            color: #6b7280;
+            font-size: 0.875rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+          }
+
+        .logo-name{
+            height: 100px;
+        }
+
+        .input-text{
+            padding-top: 30px;
+        }
+
+        .column3{
+            padding-top: 14rem;
+        }
+
+        .logo {
+            margin-bottom: 2rem;
+          }
+    
+        .logo img {
+            width: 170px;
+            height: 40px;
+            object-fit: contain;
+          }
+
+        .image-upload-container {
+            width: 290px;
+            height: 200px;
+            border: 2px dashed #cccccc;
+            border-radius: 10px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    
+        .image-upload-container:hover {
+            background-color: #f8f8f8;
+        }
+    
+        .image-upload {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+    
+        .image-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+    
+        .upload-text {
+            font-size: 14px;
+            color: #888;
+        }
+
+        .login-text {
+            text-align: left;
+            margin-top: 1.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+          }
+    
+          .login-text a {
+            color: #226cda;
+            text-decoration: none;
+            font-weight: 500;
+            margin-left: 0.25rem;
+          }
+    
+          .login-text a:hover {
+            text-decoration: underline;
+          }
+        
+      button {
+        width: 70%;
+        padding: 0.875rem 1.5rem;
+        background-color: #1a1a1a;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      button:hover {
+        background-color: #458efa;
+        transform: translateY(-1px);
+      }
+    
+        .img-preview {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        /* Hide the arrows in most browsers */
+        #no-arrows::-webkit-outer-spin-button,
+        #no-arrows::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+
+        @media (max-width: 768px) {
+            .image-column {
+                display: none; /* Hide image on smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+            
+                <div class="col-md-4 px-0">
+                <img src="../static/assets/login/bg1.jpg"
+                    alt="Login image" class="w-100 h-100" style="object-fit: cover; object-position: left;">
+                </div>
+
+                <!--COLUMN 2-->
+                <div class="col-sm-4 p-5">
+                    <div class="logo">
+                        <img src="./static/assets/ath1.png" alt="Athletyc Logo" />
+                      </div>
+              
+              
+                    <form action ="{{ url_for('submit_form') }}" method="POST" enctype="multipart/form-data" style="width: 23rem;">
+                           
+                        <h3>Registration</h3>
+                        <h6>Enter your details below</h6>
+              
+                          {% with messages = get_flashed_messages() %}
+                          {% if messages %}
+                              <div class="alert alert-info" role="alert">
+                                  {% for message in messages %}
+                                      {{ message }}<br>
+                                  {% endfor %}
+                              </div>
+                          {% endif %}
+                            {% endwith %}
+
+                        <div class="input-text">
+                            <label class="form-label">Full Name *</label>
+                        <input type="text" class="form-control form-control-md" id="name" name="name" placeholder="Enter your name" value="" required/>
+                        </div>
+                         
+                        <div class="input-text">
+                            <label class="form-label">Gender *</label>
+                            <select name="gender" class="form-control form-control-md" id="gender"> 
+                              <option value="" >Select</option>
+                              <option value="Male" >Male</option>
+                              <option value="Female" >Female</option>
+                            </select>
+                        </div>
+
+                        <div class="input-text">
+                            <label>Date of Birth *</label>
+                            <input type="date" class="form-control form-control-md" name="dateofbirth" placeholder="Enter birth date" value="" required />
+                            <p>Need to be at least 18 years old to register</p>
+                        </div>
+                        <div class="input-text">
+                            <label class="form-label">Mobile Number *</label>
+                            <input type="number" class="form-control form-control-md" id="no-arrows" name="number" placeholder="Enter your number" value="" required/>
+                        </div>
+
+                        <div class="input-text">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control form-control-md" id="email" name="email" placeholder="Enter your email" required/>
+                        </div>
+            
+                        <div class="input-text">
+                            <label class="form-label">Password *</label>
+                            <input type="password" class="form-control form-control-md" id="password" name="password" placeholder="Enter your password" required/>
+                            <p style="font-size:12px;">Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, and a number.</p>
+                        </div>
+                        <div class="">
+                            <label class="form-label">Confirm Password *</label>
+                            <input type="password" class="form-control form-control-md" id="confirmpassword" name="confirmpassword" placeholder="Confirm your password" required/>
+                            
+                        </div>
+
+                </div>
+                            
+                <div class="column3 col-sm-4 pb-3">
+                    
+                    <!--ADDRESS-->
+                    <!-- Region -->
+                    <div class="col-sm-6 mb-3">
+                        <label for="region" class="form-label">Region *</label>
+                        <select name="region" class="form-control form-control-md" id="region" required>
+                            <option selected disabled>Choose Region</option>
+                        </select>
+                        <input type="hidden" id="region-text" name="region_text">
+                    </div>
+
+                    <!-- Province -->
+                    <div class="col-sm-6 mb-3">
+                        <label for="province" class="form-label">Province *</label>
+                        <select name="province" class="form-control form-control-md" id="province" required>
+                            <option selected disabled>Choose Province</option>
+                        </select>
+                        <input type="hidden" id="province-text" name="province_text">
+                    </div>
+
+                    <!-- City/Municipality -->
+                    <div class="col-sm-6 mb-3">
+                        <label for="city" class="form-label">City/Municipality *</label>
+                        <select name="city" class="form-control form-control-md" id="city" required>
+                            <option selected disabled>Choose City/Municipality</option>
+                        </select>
+                        <input type="hidden" id="city-text" name="city_text">
+                    </div>
+
+                    <!-- Barangay -->
+                    <div class="col-sm-6 mb-3">
+                        <label for="barangay" class="form-label">Barangay *</label>
+                        <select name="barangay" class="form-control form-control-md" id="barangay" required>
+                            <option selected disabled>Choose Barangay</option>
+                        </select>
+                        <input type="hidden" id="barangay-text" name="barangay_text">
+                    </div>
+                    <!--END ADDDRESS-->
+
+                    <!--IMAGE-->
+                    <label id="image-file" for="image-file">Upload A Valid ID *</label>
+                    <!--<P style="font-size: 12px;">(.png is only allowed)</P>-->
+                    <div class="container mt-3">
+                        <!-- Box-style image upload area -->
+                        <dl>
+                            <div class="image-upload-container">
+                                <div id="image-preview" class="image-preview-box">
+                                    <span class="upload-text">Click or Drag & Drop Image</span>
+                                </div>
+                                <input type="file" name="validID" id="image-upload" style="display: none;" accept="image/*" required />
+                            </div>
+                            
+                        </dl>
+                    </div>
+                   
+                    <div class="pt-5 mb-2">
+                        <button type="submit" value="submit">Create Account</button>
+                    </div>
+                    <div class="login-text">
+                        Already have an account?
+                        <a href="{{ url_for('login') }}">Login</a>
+                      </div>
+                </div>
+                </form>
+          </div>
+        </div>
+      </section>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <script src="/static/reg.js"></script>  
+</body>
+</html>

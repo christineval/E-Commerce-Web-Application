@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Add Product</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="../../static/seller.css">
+
+
+</head>
+
+<body class="addprd">
+    <div class="container">
+        <aside>
+            <div class="top">
+                <div class="logo">
+                    <h2>Seller Panel</h2>
+                </div>
+            </div>
+            <div class="sidebar">
+                <a href="{{ url_for('sellerdashboard') }}">
+                    <span class="material-symbols-sharp">grid_view</span>
+                    <h3>Dashboard</h3>
+                </a>
+                <a href="{{ url_for('seller_salesrecord') }}">
+                    <span class="material-symbols-sharp">menu_book</span>
+                    <h3>Sales Record</h3>
+                </a>
+                <a href="{{ url_for('addprd') }}" class="active">
+                    <span class="material-symbols-sharp">add</span>
+                    <h3>Add Product</h3>
+                </a>
+                <a href="{{ url_for('seller_feedback') }}" >
+                    <span class="material-symbols-sharp">mail_outline</span>
+                    <h3>Feedback</h3>
+                </a>
+                <a href="{{ url_for('seller_products') }}">
+                    <span class="material-symbols-sharp">inventory_2</span>
+                    <h3>Products</h3>
+                </a>
+                <a href="{{ url_for('seller_order') }}" >
+                    <span class="material-symbols-sharp">receipt_long</span>
+                    <h3>Orders</h3>
+                </a>
+                <a href="{{ url_for('seller_messages') }}">
+                    <span class="material-symbols-sharp">chat</span>
+                    <h3>Messages</h3>
+                </a>
+
+                <a href="{{ url_for('seller_vouchers') }}">
+                    <span class="material-symbols-sharp">sell</span>
+                    <h3>Vouchers</h3>
+                </a>
+                <a href="{{ url_for('seller_settings') }}" >
+                    <span class="material-symbols-sharp">settings</span>
+                    <h3>Settings</h3>
+                </a>
+
+                <button class="btn btn-light m-1 border" type="button" onclick="confirmLogout()">
+                    <span class="material-symbols-sharp">logout</span>
+                    <h3>Logout</h3>
+                </button>
+            </div>
+        </aside>
+        <!-- --------------
+        end aside
+      -------------------- -->
+
+        <!-- --------------
+        start main part
+      --------------- -->
+
+        <main style="width: 100%">
+            <h1>Add Product</h1>
+             <!--for image upload-->
+            <p>
+                {% with messages = get_flashed_messages() %} 
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                    
+                  <li>{{ message }}</li>
+                  {% endfor %}
+                    </ul>
+                {% endif %} 
+                {% endwith %}
+            </p>
+            <form action="{{ url_for('addprd_submit') }}" method="POST" enctype="multipart/form-data">
+                
+            <!-- Product Table -->
+            <div class="addproduct-grid">
+                <div class="grid-container">
+                    <!--general info-->
+                    <div class="left-container">
+                        <h2>General Information</h2>
+                        <div class="text-field">
+                            <h5>Product Name *</h5>
+                            <div class="input-text">
+                                <input type="text" name="prdname-input" required/>
+                            </div>
+                        </div>
+
+                        <div class="text-field">
+                            <h5>Description *</h5>
+                            <div class="input-text mb-3">
+                                <textarea class="form-control" name="desc-input" rows="3"  maxlength="250" oninput="updateCharacterCount(this)" required style="resize: none;"></textarea>
+                                <!--<input type="text" class="form-control" name="desc-input" maxlength="250" oninput="updateCharacterCount(this)" />-->
+                                <small class="form-text text-muted" id="charCount">0/250 characters used</small>
+                            </div>
+                        </div>
+                    <!--pricing-->
+                        <h2>Pricing</h2>
+                        <div class="text-field">
+                            <h5>Price *</h5>
+                            <div class="input-text">
+                                <input type="number" class="form-control" name="price-input" id="no-arrows" required/>
+                            </div>
+                        </div>
+
+                        <!--inventory-->
+                        <h2>Inventory</h2>
+                        <div class="text-field">
+                            <h5>Stock *</h5>
+                            <div class="input-text">
+                                <input type="number" class="form-control qty" name="qty-input" id="no-arrows" required/>
+                            </div>
+                        </div>
+
+                        <!--Variation-->
+                        <h2>Variation</h2>
+                        <div class="d-flex var">
+                            <div class="text-field">
+                                <h5>Color</h5>
+                                <div class="input-text">
+                                    <input type="text" class="form-control color" name="color-input"/>
+                                </div>
+                            </div>
+                            <div class="text-field">
+                                <h5>Size</h5>
+                                <div class="input-text">
+                                    <input type="text" class="form-control size" name="size-input"/>
+                                </div>
+                            </div>
+                            <div class="text-field">
+                                <h5>Brand *</h5>
+                                <div class="input-text">
+                                    <input type="text" class="form-control brand" name="brand-input" required/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="right-container">
+                        <!--Image Upload-->
+                        <h2>Product Image</h2>
+                        <label id="image-file" for="image-file">Upload Images *</label>
+                        <P>(.png is only allowed)</P>
+                        <div class="container">
+                            <!-- Box-style image upload area -->
+                            <dl>
+                                <div class="image-upload-box" id="upload-box-1">
+                                    <input type="file" name="files[]" id="image-upload-1" class="image-upload-input" autocomplete="off" required>
+                                    <div id="preview-1" class="image-preview-box">
+                                        <span class="upload-text">Click or Drag & Drop Image</span>
+                                    </div>
+                                </div>
+                            </dl>
+                            <dl>
+                                <div class="image-upload-box" id="upload-box-2">
+                                    <input type="file" name="files[]" id="image-upload-2" class="image-upload-input" autocomplete="off" required>
+                                    <div id="preview-2" class="image-preview-box">
+                                        <span class="upload-text">Click or Drag & Drop Image</span>
+                                    </div>
+                                </div>
+                            </dl>
+                            <dl>
+                                <div class="image-upload-box" id="upload-box-3">
+                                    <input type="file" name="files[]" id="image-upload-3" class="image-upload-input" autocomplete="off" required>
+                                    <div id="preview-3" class="image-preview-box">
+                                        <span class="upload-text">Click or Drag & Drop Image</span>
+                                    </div>
+                                </div>
+                            </dl>
+                            <dl>
+                                <div class="image-upload-box" id="upload-box-4">
+                                    <input type="file" name="files[]" id="image-upload-4" class="image-upload-input" autocomplete="off" required>
+                                    <div id="preview-4" class="image-preview-box">
+                                        <span class="upload-text">Click or Drag & Drop Image</span>
+                                    </div>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!--CATEGORY-->
+                        <h2>Category</h2>
+                       
+
+                        <!-- Type Dropdown -->
+                        <div class="dropdown" id="typeDropdown">
+                            <h5>Type *</h5>
+                            <button type="button">Select a type</button>
+                            <ul class="dropdown-menu">
+                                <li data-value="Team Sports">Team Sports</li>
+                                <li data-value="Water Sports">Water Sports</li>
+                                <li data-value="Sports Apparel">Sports Apparel</li>
+                                <li data-value="Fitness Equipments">Fitness Equipments</li>
+                                <li data-value="Biking">Biking</li>
+                                <li data-value="Camping & Hiking">Camping & Hiking</li>
+                            </ul>
+                            <input type="hidden" name="type" id="type-input" value="" required>
+                        </div>
+                        
+                        <!-- Category Dropdown -->
+                        <div class="dropdown" id="categoryDropdown">
+                            <h5>Category *</h5>
+                            <button type="button">Select a category</button>
+                            <ul class="dropdown-menu" id="categoryMenu"></ul>
+                            <input type="hidden" name="category" id="category-input" value="" required>
+                        </div>
+                        
+                        <!-- Subcategory Dropdown -->
+                        <div class="dropdown" id="subcategoryDropdown">
+                            <h5>Subcategory *</h5>
+                            <button type="button">Select a subcategory</button>
+                            <ul class="dropdown-menu" id="subcategoryMenu"></ul>
+                            <input type="hidden" name="subcategory" id="subcategory-input" value="" required>
+                        </div>
+
+                        
+                        <!--SUBMIT BUTTON-->
+                        <div class="right">
+                            <button type="reset" value="cancel" class="btn btn-primary cancel">CANCEL</button>
+                            <button type="submit" value="publishprd" class="btn btn-primary">PUBLISH PRODUCT</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            </form>
+        </main>
+        <!------------------
+         end main
+        ------------------->
+    </div>
+    <script src="../../static/seller.js"></script>
+    <script>
+        //logout
+        function confirmLogout() {
+            // Display a confirmation dialog
+        if (confirm("Are you sure you want to log out?")) {
+                // Redirect to the logout route if the user confirms
+            window.location.href = "{{ url_for('logout') }}";
+            }
+        }
+
+
+        
+    // Category and subcategory mapping based on selected type and category
+        const data = {
+            "Team Sports": {
+                "Volleyball": ["Balls and Accessories", "Support", "Equipment"],
+                "Basketball": ["Balls and Accessories", "Support", "Equipment"],
+                "Football": ["Balls and Accessories", "Support", "Equipment"],
+                "Hockey": ["Sticks and Grips", "Equipment"]
+            },
+            "Water Sports":{
+                "Kayaking":["Inflatable Kayaks", "Inflatable Boats", "Paddles", "Pump", "Buoyancy Vest"],
+                "Free Diving": ["Snorkels", "Fins", "Mask"],
+                "Surfing": ["Boards", "Accessories"]
+            },
+            "Sports Apparel": {
+                "Clothing": ["Tops and T-shirt", "Pants and Leggings", "Shorts", "Jackets", "Jerseys", "Wetsuits and Surf Tops"],
+                "Shoes": ["Basketball", "Volleyball", "Football", "Hockey", "Running", "Biking", "Lifestyle", "Water Sport"]
+            },
+            "Camping & Hiking": {
+                "Camping": ["Tents and Tarpaulins", "Sleeping Equipment"],
+                "Hiking": ["Hiking Backpacks", "Gear"],
+                "Kitchenware": ["Cooking Set and Cutlery", "Portable Stove"],
+                "Accessories": ["Survival Protection"]
+        
+            },
+            "Biking": {
+                "Bikes": ["Mountain Bike", "Road Bike", ],
+                "Bike Accessories": ["Helmets", "Gloves", "Lights", "Backpacks", "Others"]
+            },
+            "Fitness Equipments": {
+                "Weight Training and Bodybuilding": ["Barbells and Weight Plates", "Dumbbells", "Resistance Bands", "Machines", "Equipments"],
+                "Gym Accessories": ["Toning Equipment", "Gym Mats and Accessories", "Jump Ropes"],
+                "Cardio Equipment": ["Treadmills", "Exercise Bikes"]
+            }
+        };
+
+        // Function to populate the category dropdown based on the selected type
+        function populateDropdown(dropdownId, items) {
+    const menu = document.getElementById(dropdownId);
+    menu.innerHTML = '';
+    items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        li.dataset.value = item;
+        menu.appendChild(li);
+    });
+}
+
+// Dropdown toggle functionality
+document.querySelectorAll('.dropdown').forEach(dropdown => {
+    const button = dropdown.querySelector('button');
+    const menu = dropdown.querySelector('.dropdown-menu');
+    const input = dropdown.querySelector('input');
+
+    button.addEventListener('click', () => {
+        dropdown.classList.toggle('active');
+    });
+
+    menu.addEventListener('click', e => {
+        if (e.target.tagName === 'LI') {
+            const value = e.target.dataset.value;
+            button.textContent = value;
+            input.value = value;
+            dropdown.classList.remove('active');
+
+            // Update dependent dropdowns
+            if (dropdown.id === 'typeDropdown') {
+                populateDropdown('categoryMenu', Object.keys(data[value] || {}));
+                document.getElementById('category-input').value = '';
+                document.querySelector('#categoryDropdown button').textContent = 'Select a category';
+
+                // Reset subcategory
+                document.getElementById('subcategoryMenu').innerHTML = '';
+                document.getElementById('subcategory-input').value = '';
+                document.querySelector('#subcategoryDropdown button').textContent = 'Select a subcategory';
+            }
+
+            if (dropdown.id === 'categoryDropdown') {
+                const selectedType = document.getElementById('type-input').value;
+                const subcategories = data[selectedType]?.[value] || [];
+                populateDropdown('subcategoryMenu', subcategories);
+                document.getElementById('subcategory-input').value = '';
+                document.querySelector('#subcategoryDropdown button').textContent = 'Select a subcategory';
+            }
+        }
+    });
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', e => {
+    if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown').forEach(dropdown => dropdown.classList.remove('active'));
+    }
+});
+           
+            //IMAGE
+        // Helper function to convert file to Base64
+        const convertToBase64 = file => new Promise((resolve) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => resolve(fileReader.result);
+        });
+
+        // Function to handle image preview
+        const handleImagePreview = async (inputId, previewId) => {
+            const inputElement = document.getElementById(inputId);
+            const previewContainer = document.getElementById(previewId);
+            
+            inputElement.addEventListener('change', async function() {
+                const file = inputElement.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const imageBase64 = await convertToBase64(file);
+                    previewContainer.innerHTML = `<img src="${imageBase64}" alt="Image Preview" class="img-preview">`;
+                } else {
+                    previewContainer.innerHTML = `<span class="upload-text">Click or Drag & Drop Image</span>`;
+                }
+            });
+
+            // Optional: Click the hidden file input when the box is clicked
+            previewContainer.parentElement.addEventListener('click', function() {
+                inputElement.click();
+            });
+
+            // Optional: Drag-and-drop image handling
+            previewContainer.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                previewContainer.style.backgroundColor = "#e9e9e9";
+            });
+
+            previewContainer.addEventListener('dragleave', function(e) {
+                previewContainer.style.backgroundColor = "#ffffff";
+            });
+
+            previewContainer.addEventListener('drop', function(e) {
+                e.preventDefault();
+                previewContainer.style.backgroundColor = "#ffffff";
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    inputElement.files = e.dataTransfer.files;  // Set the file input to the dropped file
+                    const imageBase64 = URL.createObjectURL(file);  // Use URL.createObjectURL for drag-and-drop preview
+                    previewContainer.innerHTML = `<img src="${imageBase64}" alt="Image Preview" class="img-preview">`;
+                }
+            });
+        }
+
+        // Attach image preview handlers to each file input
+        handleImagePreview('image-upload-1', 'preview-1');
+        handleImagePreview('image-upload-2', 'preview-2');
+        handleImagePreview('image-upload-3', 'preview-3');
+        handleImagePreview('image-upload-4', 'preview-4');
+
+
+
+
+        //limit description count
+        function updateCharacterCount(input) {
+        const maxLength = 250;
+        const currentLength = input.value.length;
+        document.getElementById('charCount').textContent = `${currentLength}/${maxLength} characters used`;
+        }
+    </script>
+</body>
+
+</html>

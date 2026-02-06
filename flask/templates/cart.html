@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="/static/cart.css">
+    <script src="/static/script.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+</head>
+
+<body>
+  <!--updatedd navbar-->
+  <div id="page" class="site page-home">
+    <aside class="site-off desktop-hide">
+        <div class="off-canvas">
+            <div class="canvas-head flexitem">
+            </div>
+        </div>
+    </aside>
+    <header>
+        <!-- header-top -->
+        <div class="header-nav">
+            <div class="container">
+                <div class="wrapper flexitem">
+                    <div class="left flexitem">
+                        <a href="{{ url_for('index') }}" class="logo">
+                            <img src="./static/assets/ath.png" width="150" height="90" alt="Athletyc Logo">
+                        </a>
+                        <nav class="mobile-hide">
+                            <ul class="flexitem second-links">
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='fitness equipments') }}">Fitness Equipments
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='fitness equipments', category='Weight Training and Bodybuilding') }}">
+                                                            <h4>Weight Training and Bodybuilding</h4>
+                                                        </a>
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Weight Training and Bodybuilding', subcategory='Resistance Bands') }}">Resistance Bands</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Weight Training and Bodybuilding', subcategory='Dumbbells') }}"">Dumbbells</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Weight Training and Bodybuilding', subcategory='Barbells and Weight Plates') }}"">Barbells and Weight Plates</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Weight Training and Bodybuilding', subcategory='Machines') }}"">Machines</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Weight Training and Bodybuilding', subcategory='Equipments') }}"">Equipments</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='fitness equipments', category='Gym Accessories') }}">
+                                                            <h4>Gym Accessories</h4>
+                                                        </a>
+                                                   
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Gym Accessories', subcategory='Toning Equipment') }}">Toning Equipment</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Gym Accessories', subcategory='Gym Mats and Accessories') }}">Gym Mats and Accessories</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Gym Accessories', subcategory='Jump Ropes') }}">Jump Ropes</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='fitness equipments', category='Cardio Equipment') }}">
+                                                            <h4>Cardio Equipment</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Cardio Equipment', subcategory='Treadmills' ) }}">Treadmills</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='fitness equipments', category='Cardio Equipment', subcategory='Exercise Bikes' ) }}">Exercise Bikes</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='Camping & Hiking') }}">Camping & Hiking
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Camping & Hiking', category='Camping') }}">
+                                                            <h4>Camping</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Camping', subcategory='Tents and Tarpaulins') }}">Tents and Tarpaulins</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Camping', subcategory='Sleeping Equipment') }}">Sleeping Equipment</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Camping & Hiking', category='Hiking') }}">
+                                                            <h4>Hiking</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Hiking', subcategory='Hiking Backpacks') }}">Hiking Backpacks</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Hiking', subcategory='Gear') }}">Gear</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Camping & Hiking', category='Kitchenware') }}">
+                                                            <h4>Kitchenware</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Kitchenware', subcategory='Cooking Set and Cutlery') }}">Cooking Set and Cutlery</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Kitchenware', subcategory='Portable Stove') }}">Portable Stove</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Camping & Hiking', category='Accessories') }}">
+                                                            <h4>Accessories</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Camping & Hiking', category='Accessories', subcategory='Survival Protection') }}">Survival Protection</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='Sports Apparel') }}">Sports Apparel
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Sports Apparel', category='Clothing') }}">
+                                                            <h4>Clothing</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Tops and T-shirt') }}">Tops and T-Shirts</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Pants and Leggings') }}">Pants and Leggings</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Shorts') }}">Shorts</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Hoodies') }}">Jackets</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Jerseys') }}">Jerseys</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Clothing', subcategory='Wetsuits and Surf Tops') }}">Wetsuits and Surf Tops</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Sports Apparel', category='Shoes') }}">
+                                                            <h4>Shoes</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Basketball') }}">Basketball</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Volleyball') }}">Volleyball</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Football') }}">Football</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Hockey') }}">Hockey</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Running') }}">Running</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Cycling') }}">Biking</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Lifestyle') }}">Lifestyle</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Sports Apparel', category='Shoes', subcategory='Water Sport') }}">Water Sport</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='team sports') }}">Team Sports
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Sports Apparel', category='Volleyball') }}">
+                                                            <h4>Volleyball</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Volleyball', subcategory='Balls and Accessories') }}">Balls and Accessories</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Volleyball', subcategory='Support') }}">Support</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Volleyball', subcategory='Equipment') }}">Equipment</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Team Sports', category='Basketball') }}">
+                                                            <h4>Basketball</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Basketball', subcategory='Balls and Accessories') }}">Balls and Accessories</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Basketball', subcategory='Support') }}">Support</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Basketball', subcategory='Equipment') }}">Equipment</a></li>
+                                                         </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Team Sports', category='Football') }}">
+                                                            <h4>Football</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Football', subcategory='Balls and Accessories') }}">Balls and Accessories</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Football', subcategory='Support') }}">Support</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Football', subcategory='Equipment') }}">Equipment</a></li>
+                                                         </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Team Sports', category='Hockey') }}">
+                                                            <h4>Hockey</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Hockey', subcategory='Sticks and Grips') }}">Sticks and Grips</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Team Sports', category='Hockey', subcategory='Equipment') }}">Equipments</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='Water Sports') }}">Water Sports
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Water Sports', category='Kayaking') }}">
+                                                            <h4>Kayaking</h4>
+                                                        </a>
+                                                       
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Kayaking', subcategory='Inflatable Kayaks') }}">Inflatable Kayaks</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Kayaking', subcategory='Inflatable Boats') }}">Inflatable Boats</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Kayaking', subcategory='Paddles') }}">Paddles</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Kayaking', subcategory='Pump') }}">Pump</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Kayaking', subcategory='Buoyancy Vest') }}">Buoyancy Vest</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Water Sports', category='Free Diving') }}">
+                                                            <h4>Free Diving</h4>
+                                                        </a>
+                                    
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Free Diving', subcategory='Snorkels') }}">Snorkels</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Free Diving', subcategory='Fins') }}">Fins</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Free Diving', subcategory='Mask') }}">Mask</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Water Sports', category='Surfing') }}">
+                                                            <h4>Surfing</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Surfing', subcategory='Boards') }}">Boards</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Water Sports', category='Surfing', subcategory='Accessories') }}">Accessories</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="has-child">
+                                    <a href="{{ url_for('view_prType', pr_type='Biking') }}">Biking
+                                        <div class="icon-small"><i class="ri-arrow-down-s-line"></i></div>
+                                    </a>
+                                    <div class="mega">
+                                        <div class="container">
+                                            <div class="wrapper">
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Biking', category='Bikes') }}">
+                                                            <h4>Bikes</h4>
+                                                        </a>
+                                                     
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bikes', subcategory='Mountain Bike') }}">Mountain Bike</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bikes', subcategory='Road Bike') }}">Road Bike</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="flexcol">
+                                                    <div class="row">
+                                                        <a href="{{ url_for('view_categories', pr_type='Biking', category='Bike Accessories') }}">
+                                                            <h4>Bike Accessories</h4>
+                                                        </a>
+                                                        
+                                                        <ul>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bike Accessories', subcategory='Helmets') }}">Helmets</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bike Accessories', subcategory='Gloves') }}">Gloves</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bike Accessories', subcategory='Lights') }}">Lights</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bike Accessories', subcategory='Backpacks') }}">Backpacks</a></li>
+                                                            <li><a href="{{ url_for('view_subcategories', pr_type='Biking', category='Bike Accessories', subcategory='Others') }}">Others</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!--icons navbar-->
+                    <div class="right">
+                        <ul class="flexitem second-links">
+                            <li>
+                                <a href="{{ url_for('cart') }}" class="iscart">
+
+                                    <div class="icon-large">
+                                        <i class="ri-shopping-cart-line"></i>
+                                        <div class="fly-item"><span id="cart-count">{{ cart_count }}</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ url_for('profile_setting') }}" class="account">
+                                    <div class="icon-small">
+                                        <i class="ri-user-line"></i>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+
+<section id="scart">
+    <div class="cart-container">
+        <div class="row">
+            <!-- Cart Details -->
+            <div class="col-md-8">
+                <h3 class="pb-3 d-flex">
+                    Cart 
+                    <div class="noprd">({{ cart_products|length }})</div>
+                </h3>
+                
+
+
+
+
+                {% for product in cart_products %}
+                <div class="form-check ">
+                    <input class="form-check-input border" type="checkbox" id="check{{ product.productID }}" name="selected_products" value="{{ product.productID }}" data-price="{{ "%.2f"|format(product.total_price) }}" onchange="updateSum()">
+        <label class="form-check-label" for="check{{ product.productID }}">
+            
+        </label>
+                    <div class="cart-item w-100 mb-5 border d-flex flex-column">
+                        <div class="desc-container d-flex justify-content-space-between">
+                            <div class="img-box w-25 pt-4">
+                                <img src="/static/assets/{{ product.prType }}/{{ product.prName }}/1.png" class="img-responsive" alt="product">
+                            </div>
+
+                            <div class="right-item">
+                                <h2 class="name p-2 pt-4">{{ product.prName }}</h2>
+                                <h5 class="subtotal-price d-none" id="cart-subtotal">₱{{ "%.2f"|format(subtotal) }}</h5>
+                                <h5 class="price text-start p-2 ">
+                                    <span class="product-price" data-price="{{ product.productID }}">{{ "%.2f"|format(product.total_price) }}</span>
+
+                                </h5>
+                                
+                                
+                                {% if size %}
+                                <h5 class="size p-2">{{ product.size }}</h5>
+                                {% endif %}
+
+                                 <!--Quantity-->
+                                <p style="padding-left:10px;">Stocks left: {{ product.qty }}</p>
+                                    <div class="quantity-selector p-2">
+                                        <button class="quantity-btn" onclick="decrease(this, {{ product.productID }})">-</button>
+                                        <input type="number" class="quantity-input" data-id="{{ product.productID }}" value="{{ product.quantity }}" min="1" max="99" readonly />
+                                        <button class="quantity-btn" onclick="increase(this, {{ product.productID }})">+</button>
+                                    </div>
+                            
+                                <!-- Delete button -->
+                                <div class="delete-button p-2">
+                                    <form action="{{ url_for('delete_from_cart') }}" method="POST">
+                                        <input type="hidden" name="product_id" value="{{ product.productID }}">
+                                        <button class="deletebtn" type="submit" onclick="return confirm('Are you sure you want to delete this product from your cart?');">
+                                            <i class="fa-regular fa-trash-can p-3"
+                                            style="color: red; width: 50px; box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2); transition: box-shadow 0.3s ease-in-out;"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Summary -->
+            <div class="col-md-4">
+                <div class="summary-container">
+                    <h3 class="pt-3">Summary</h3>
+
+                    <div class="sub-summary">
+                        <div class="subtotal-container">
+                            <h5 class="subtotal">Subtotal</h5>
+                            <h5><span id="total-sum">₱ 00.00</span></h5>
+                            <script>
+                                function updateSum() {
+                                    let totalSum = 0;
+                                    
+                                    // Loop through all the checkboxes and sum the prices of the checked ones
+                                    document.querySelectorAll('input[name="selected_products"]:checked').forEach(function(checkbox) {
+                                        let price = parseFloat(checkbox.getAttribute('data-price'));
+                                        
+                                        // Ensure the price is a valid number before adding it to the total
+                                        if (!isNaN(price)) {
+                                            totalSum += price;
+                                        }
+                                    });
+                                    
+                                    // Update the displayed total sum
+                                    document.getElementById('total-sum').textContent = totalSum.toFixed(2); 
+                                    newtotal = totalSum += 79;// Formatting to 2 decimal places
+                                    document.getElementById('cart-total').textContent = newtotal.toFixed(2);
+                                }
+                            </script>
+                            <h5 class="subtotal-price d-none" id="cart-subtotal">₱{{ "%.2f"|format(subtotal) }}</h5>
+                        </div>
+                        <div class="handling-container">
+                            <h5 class="handling">Handling Fee</h5>
+                            <h5 class="handling-price">₱{{ handling_fee }}</h5>
+                        </div>
+
+                        <hr width="100%" color="Black" size="4px" />
+                        <div class="form-group">
+                            <!-- Text Input for Voucher Code -->
+                           
+                              
+                                <input type="text" class="form-control mb-2" id="voucher-code" name="voucher_code" placeholder="Enter your voucher code" list="voucherList">
+                                <datalist id="voucherList">
+                                    {% if vouchers %}
+                                        {% for voucher in vouchers %}
+                                            <option value="{{ voucher[0] }}">{{ voucher[0] }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option value="">No active vouchers available</option>
+                                    {% endif %}
+                                </datalist>
+                                <!-- Combo Box for Voucher Codes (Display as List) -->
+                                
+                                
+                                
+                        </div>
+                        
+                    
+                        
+                        {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                                <script>
+                                    {% for message in messages %}
+                                        alert("{{ message }}");
+                                    {% endfor %}
+                                </script>
+                            {% endif %}
+                        {% endwith %}
+                        
+
+                        <hr width="100%" color="Black" size="4px" />
+
+                        <div class="total-container">
+                            <h5 class="total">Total </h5>
+                            <h5 class="total-price" id="cart-total">₱ 00.00</h5><Br>
+                            
+                        </div>
+                        
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js">{{ total }}</script>
+                        <script>
+                            $(document).ready(function() {
+                                // When the user enters a voucher code
+                                $('#voucher-code').on('input', function() {
+                                    var voucherCode = $(this).val();
+                                    
+                                    // Send AJAX request to apply the voucher code and get the updated total
+                                    $.ajax({
+                                        url: '/cart',  // Same route as the cart page
+                                        type: 'POST',
+                                        data: {
+                                            voucher_code: voucherCode
+                                        },
+                                        success: function(response) {
+                                            // Assuming the server returns the updated total as part of the response
+                                            $('#discounted-cart-total').text('₱' + response.total.toFixed(2));  // Update the total
+                                        },
+                                        error: function(error) {
+                                            console.error("Error applying voucher:", error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+                        <hr width="100%" color="Black" size="4px" />
+                    </div>
+
+                    <div class="button">
+                        <form action="/checkout" method="POST">
+                            <div class="d-flex flex-column">
+                                {% for product in cart_products %}
+                                    <input  class="form-check-input checkout-checkbox d-none" type="checkbox" id="checkout-check{{ product.productID }}" name="selected_products" value="{{ product.productID }}">
+                                    <label class="form-check-label d-none" for="checkout-check{{ product.productID }}">
+                                        Select Product: {{ product.prName }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                            <input type="hidden" name="voucher_code" id="voucher-code-hidden" value="">
+                            <button type="submit" class="checkout-btn btn-lg">CHECKOUT</button>
+                        </form>
+                    </div>
+                    
+                    <div class="button">
+                        <a href="index">
+                            <button class="contshopping-btn btn-lg">CONTINUE SHOPPING</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Footer-->
+    <div>
+        <div class="footer-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 class="footer-mainheading">Athletyc</h4>
+                        <p>At Athletyc, we're dedicated to bringing you quality products at great prices. Your
+                            satisfaction is our
+                            priority—experience the difference today!</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Customer Service</h4>
+                        <div class="mb-2"><a href="{{ url_for('profile_setting') }}" class="text-white"> Order Status</a></div>
+                        <div class="mb-2"><a href="{{ url_for('delivery_footer') }}" class="text-white"> Delivery</a></div>
+                        <div class="mb-2"><a href="{{ url_for('returns_footer') }}" class="text-white"> Returns & Refunds</a></div>
+                        <div class="mb-2"><a href="{{ url_for('paymentoption_footer') }}" class="text-white"> Payment Option</Option></a></div>
+                        <div class="mb-2"><a href="{{ url_for('seller_register') }}" class="text-white"> Register as Seller</a></div>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Shop Now</h4>
+                        <div class="mb-2"><a href="" class="text-white">Collections</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Trending Products</a></div>
+                        <div class="mb-2"><a href="" class="text-white">New Arrivals Products</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Featured Products</a></div>
+                    </div>
+                    <div class="col-md-2">
+                        <h4 class="footer-heading">Contact Us</h4>
+                        <div class="mb-2">
+                            <a href="" class="text-white">
+                                <i class="fa-sharp fa-solid fa-envelope"></i> athletyc@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <p class=""> &copy; 2024 BSIT 3A. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="social-media">
+                            <a href=""><i class="fa-brands fa-facebook"></i></a>
+                            <a href=""><i class="fa-brands fa-twitter"></i></a>
+                            <a href=""><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Listen for changes in the cart checkboxes and update the checkout checkboxes
+        document.querySelectorAll('.form-check-input').forEach(cartCheckbox => {
+            cartCheckbox.addEventListener('change', function() {
+                const productID = this.value;
+                const checkoutCheckbox = document.getElementById(`checkout-check${productID}`);
+    
+                // Check the corresponding checkbox in the checkout section if the cart checkbox is checked
+                if (this.checked) {
+                    checkoutCheckbox.checked = true;
+                } else {
+                    checkoutCheckbox.checked = false;
+                }
+            });
+        });
+    
+        // Optionally, if you want to reflect the changes in the cart checkboxes when selecting in checkout
+        document.querySelectorAll('.checkout-checkbox').forEach(checkoutCheckbox => {
+            checkoutCheckbox.addEventListener('change', function() {
+                const productID = this.value;
+                const cartCheckbox = document.getElementById(`check${productID}`);
+    
+                // Check the corresponding checkbox in the cart section if the checkout checkbox is checked
+                if (this.checked) {
+                    cartCheckbox.checked = true;
+                } else {
+                    cartCheckbox.checked = false;
+                }
+            });
+        });
+    </script>
+    <script>
+        // Update the hidden input field with the voucher code on form submission
+        document.querySelector('.checkout-btn').addEventListener('click', function() {
+            var voucherCodeInput = document.getElementById('voucher-code');
+            document.getElementById('voucher-code-hidden').value = voucherCodeInput.value;
+        });
+
+      // Quantity selector functions
+      // Function to handle the decrease button click
+// Function to handle the decrease button click
+function decrease(button, productId) {
+    const quantityInput = button.closest('.quantity-selector').querySelector('.quantity-input');
+    let quantity = parseInt(quantityInput.value);
+    if (quantity > 1) {
+        quantity--; // Decrease quantity
+        quantityInput.value = quantity;
+
+        // Send the updated quantity to the server
+        updateQuantityOnServer(productId, quantity);
+        window.location.reload();
+
+    }
+}
+
+// Function to handle the increase button click
+function increase(button, productId) {
+    const quantityInput = button.closest('.quantity-selector').querySelector('.quantity-input');
+    let quantity = parseInt(quantityInput.value);
+    quantity++; // Increase quantity
+    quantityInput.value = quantity;
+
+    // Send the updated quantity to the server
+    updateQuantityOnServer(productId, quantity);
+    window.location.reload();
+
+}
+
+// Function to send the updated quantity to the server
+function updateQuantityOnServer(productId, quantity) {
+    fetch(`/update-quantity/${productId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quantity: quantity }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update the displayed total price for this product
+            const priceElement = document.querySelector(`.product-price[data-price="${productId}"]`);
+            if (priceElement) {
+                priceElement.textContent = `${data.newPrice.toFixed(2)}`;
+            } else {
+                console.error('Product price element not found for productId:', productId);
+            }
+
+            // Optionally, update the cart subtotal if necessary
+            const cartSubtotalElement = document.querySelector('.cart-subtotal');
+            if (cartSubtotalElement) {
+                cartSubtotalElement.textContent = `₱${data.cartSubtotal.toFixed(2)}`;
+            } else {
+                console.error('Cart subtotal element not found!');
+            }
+        } else {
+            alert(data.message || 'An error occurred while updating the quantity.');
+        }
+    })
+    .catch(error => {
+        alert('Error: ' + error);
+    });
+}
+
+        // Delete button AJAX request
+    </script>
+    
+    
+    <script>
+        $(document).ready(function() {
+            // Fetch the valid vouchers from the server
+            $.ajax({
+                url: '/get_vouchers',  // Endpoint to get vouchers
+                type: 'GET',
+                success: function(response) {
+                    const vouchers = response.vouchers;
+        
+                    // Empty the combo box before adding new options
+                    $('#voucher-select').empty();
+        
+                    // Loop through the vouchers and add them to the combo box
+                    vouchers.forEach(function(code) {
+                        $('#voucher-select').append(new Option(code, code));
+                    });
+                },
+                error: function(error) {
+                    console.error("Error fetching vouchers:", error);
+                }
+            });
+        });
+        </script>
+</section>
+
+<!-- for delete button -->
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    
+
+
+
+
+</body>
+</body>
+</html>
