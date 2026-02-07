@@ -15,7 +15,7 @@ The web application communicates with a Flask REST API backend and uses MySQL as
 - Place orders
 - View order history
 - Message sellers
--Give feedback or report
+- Give feedback or report
 
 ### 🏪 Seller Features
 - Registration and login
@@ -27,7 +27,7 @@ The web application communicates with a Flask REST API backend and uses MySQL as
 - View sales record
 - Manage discount vouchers
 - Interact with buyers
--View feedbacks
+- View feedbacks
 
 ## 🛠 Technologies Used
 - HTML
@@ -41,12 +41,12 @@ The web application communicates with a Flask REST API backend and uses MySQL as
 
 ## Screenshots
 ### Buyer View
-![Buyer Home Page](screenshots/screen 1.png)
-![Buyer Home Page](screenshots/screen 2.png)
-![Buyer Home Page](screenshots/screen 3.png)
+![Authentication & Home Page](screenshots/screen1.png)
+![Product Browsing Page](screenshots/screen2.png)
+![Product Details & Cart Page](screenshots/screen3.png)
 
 ### Seller View
-![Seller Dashboard](screenshots/screen 4.png)
+![Seller View](screenshots/screen4.png)
 
 
 ## Related Repositories
